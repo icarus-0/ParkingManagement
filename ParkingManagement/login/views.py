@@ -15,6 +15,7 @@ class SignUp(View):
         email = request.POST['email']
         password = request.POST['pass']
         re_password = request.POST['re_pass']
+        user_type = request.POST['user_type']
 
         if password == re_password:
             if not User.objects.filter(username=email).exists():
@@ -26,14 +27,27 @@ class SignUp(View):
                                                     )
                                                     
                     user.save()
+                    if user_type == 'booking':
+                        booking = BookingCounterAgent(
+                            name = name,
+                            user = user
+                        )
+                        booking.save()
+                    elif user_type == 'parking':
+                        parking = ParkingZoneAssitant(
+                            name=name,
+                            user = user
+                        )
+                        parking.save()
+
                     messages.info(request,'Successfully resigtered ..')
-                    return redirect('/signin')
+                    return redirect('/login/signin')
                 else:
                     messages.error(request,'This email is already registered')
-                    return redirect('/signup')
+                    return redirect('/login/signup')
             else:
                 messages.error(request,'Username is already present')
-                return redirect('/signup')
+                return redirect('/login/signup')
         else:
             messages.error(request,'Password not matched')
             return redirect('/login/signup')
@@ -44,7 +58,7 @@ class SignUp(View):
 class SignIn(View):
 
     def get(self,request):
-        return render(request,'login/sign-in.html')
+        return render(request,'login/login.html')
 
     def post(self,request):
         username = request.POST['email']
@@ -57,10 +71,10 @@ class SignIn(View):
             return redirect('/dashboard')
         else:
             messages.error(request,'Invalid credientials')
-            return redirect('/signin')
+            return redirect('/login/signin')
 
 
 # handle logout
 def logout(request):
     auth.logout(request)
-    return redirect('/signin')
+    return redirect('/login/signin')

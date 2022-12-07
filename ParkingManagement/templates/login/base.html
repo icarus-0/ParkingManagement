@@ -29,5 +29,27 @@
     <script src="{% static 'assets/js/settings.js' %}"></script>
     <script src="{% static 'assets/js/todolist.js' %}"></script>
     <!-- endinject -->
+    <script>
+        $(document).ready(function(){ 
+            $("input:checkbox").on('click', function() {
+                
+                var $box = $(this);
+                if ($box.is(":checked")) {
+                  id =  $box.attr("id");
+                  if (id=="booking"){
+                    $('#parking').prop("checked", false);
+                    $('#user_type').val('booking');
+                  }else{
+                    $('#booking').prop("checked", false);
+                    $('#user_type').val('parking');
+                  }
+
+                  
+                } 
+              });    
+        
+        });
+
+    </script>
   </body>
 </html>
