@@ -18,7 +18,7 @@
                 </div>
                 <div class="profile-name">
                   <h5 class="mb-0 font-weight-normal">{{request.user.first_name}}</h5>
-                  <span>Booking Counter Agent</span>
+                  <span>{{logged_user}}</span>
                 </div>
               </div>
               
@@ -67,7 +67,20 @@
         <!-- partial -->
         <div class="main-panel">
           <div class="content-wrapper">
-           
+
+            {% if parking_zones.count == 0  %}
+            {% if logged_user == 'BookingCounterAgent'%}
+
+            <form method="post" action="/dashboard/initialize_data">
+              {% csrf_token %}
+              <button class="nav-link btn btn-primary create-new-button"> + Inzilazie Parking Zone Data</button>
+            </form>
+            
+            {% endif %}
+            {% endif %}
+
+
+            {% if parking_zones.count != 0 %}
             <div class="row">
               <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
                 <div class="card">
@@ -150,7 +163,10 @@
                         <h6 class="text-muted font-weight-normal">Free Spaces - 10</h6>
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                        <i class="icon-lg mdi mdi-codepen text-primary ml-auto"></i>
+                        <a href="#">
+                          <i class="icon-lg mdi mdi-codepen text-primary ml-auto" id="zone_a_btn"></i>
+                        </a>
+                        
                       </div>
                     </div>
                   </div>
@@ -169,7 +185,9 @@
                         <h6 class="text-muted font-weight-normal"> Free Spaces - 10</h6>
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                        <i class="icon-lg mdi mdi-codepen text-success ml-auto"></i>
+                        <a href="#">
+                          <i class="icon-lg mdi mdi-codepen text-success ml-auto" id="zone_b_btn"></i>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -188,7 +206,9 @@
                         <h6 class="text-muted font-weight-normal">Free Spaces - 10</h6>
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
-                        <i class="icon-lg mdi mdi-codepen text-info ml-auto"></i>
+                        <a href="#">
+                          <i class="icon-lg mdi mdi-codepen text-info ml-auto" id="zone_c_btn"></i>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -196,7 +216,7 @@
               </div>
             </div>
 
-            <div class="row">
+            <div class="row" id="zone_a_btn_div">
               
               <div class="col-lg-12 stretch-card">
                 <div class="card">
@@ -210,47 +230,176 @@
                           <tr>
                             <th> # Id </th>
                             <th> Parking Space Title</th>
-                            <th> Vehichle Parked </th>
-                            <th> Booking Date </th>
-                            <th> Deadline </th>
+                            <th> Status </th>
+                            <th> Vehicle Registration No. </th>
+                            <th>  </th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr class="table-info">
-                            <td> 1 </td>
-                            <td> Herman Beck </td>
-                            <td> Photoshop </td>
-                            <td> $ 77.99 </td>
-                            <td> May 15, 2015 </td>
-                          </tr>
-                          <tr class="table-warning">
-                            <td> 2 </td>
-                            <td> Messsy Adam </td>
-                            <td> Flash </td>
-                            <td> $245.30 </td>
-                            <td> July 1, 2015 </td>
-                          </tr>
+                          {% for space in parking_spaces_a %}
+
+                          {% if space.status != 'Vacant' %}
                           <tr class="table-danger">
-                            <td> 3 </td>
-                            <td> John Richards </td>
-                            <td> Premeire </td>
-                            <td> $138.00 </td>
-                            <td> Apr 12, 2015 </td>
+                            <td> {{space.id}} </td>
+                            <td> {{space.parking_space_title}} </td>
+                            <td> {{space.status}} </td>
+                            <td> {{space.vehicle_parked}} </td>
+                            <td>  
+                              <form method="post" action="/dashboard/release_parking_space">
+                                {% csrf_token %}
+                                <input  name="parking_space_id" type="hidden" value="{{space.id}}"> 
+                                <button class="btn btn-primary mt-1" type="submit">Release</button>
+                              </form>
+                              
+                            </td>
                           </tr>
+                          {% endif %}
+
+                          {% if space.status == 'Vacant' %}
                           <tr class="table-success">
-                            <td> 4 </td>
-                            <td> Peter Meggik </td>
-                            <td> After effects </td>
-                            <td> $ 77.99 </td>
-                            <td> May 15, 2015 </td>
+                            <td> {{space.id}} </td>
+                            <td> {{space.parking_space_title}} </td>
+                            <td> {{space.status}} </td>
+                            <td> {{space.vehicle_parked}} </td>
+                            <td>
+                              <form method="post" action="/dashboard/book_parking_space">
+                                {% csrf_token %}
+                                <input type="text" class="form-control" placeholder="Enter Vehicle Registration Number" name="vehicle_number"> 
+                                <input  name="parking_space_id" type="hidden" value="{{space.id}}"> 
+                                <button class="btn btn-info mt-1 bookparkingbtn" type="submit">Book</button>
+                              </form>
+                              
+                            </td>
                           </tr>
-                          <tr class="table-primary">
-                            <td> 5 </td>
-                            <td> Edward </td>
-                            <td> Illustrator </td>
-                            <td> $ 160.25 </td>
-                            <td> May 03, 2015 </td>
+                          {% endif %}
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" id="zone_b_btn_div">
+              
+              <div class="col-lg-12 stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Parking Space Details</h4>
+                    <p class="card-description"> Zone B</code>
+                    </p>
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-contextual">
+                        <thead>
+                          <tr>
+                            <th> # Id </th>
+                            <th> Parking Space Title</th>
+                            <th> Status </th>
+                            <th> Vehicle Registration No. </th>
+                            <th>  </th>
                           </tr>
+                        </thead>
+                        <tbody>
+                          {% for space in parking_spaces_b %}
+
+                          {% if space.status != 'Vacant' %}
+                          <tr class="table-danger">
+                            <td> {{space.id}} </td>
+                            <td> {{space.parking_space_title}} </td>
+                            <td> {{space.status}} </td>
+                            <td> {{space.vehicle_parked}} </td>
+                            <td>
+                              <form method="post" action="/dashboard/release_parking_space">
+                                {% csrf_token %}
+                                <input  name="parking_space_id" type="hidden" value="{{space.id}}"> 
+                                <button class="btn btn-primary mt-1" type="submit">Release</button>
+                              </form>
+                            </td>
+                            
+                          </tr>
+                          {% endif %}
+
+                          {% if space.status == 'Vacant' %}
+                          <tr class="table-success">
+                            <td> {{space.id}} </td>
+                            <td> {{space.parking_space_title}} </td>
+                            <td> {{space.status}} </td>
+                            <td> {{space.vehicle_parked}} </td>
+                            <td>
+                              <form method="post" action="/dashboard/book_parking_space">
+                                {% csrf_token %}
+                                <input type="text" class="form-control" placeholder="Enter Vehicle Registration Number" name="vehicle_number"> 
+                                <input  name="parking_space_id" type="hidden" value="{{space.id}}"> 
+                                <button class="btn btn-info mt-1 bookparkingbtn" type="submit">Book</button>
+                              </form>
+                          </tr>
+                          {% endif %}
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row" id="zone_c_btn_div">
+              
+              <div class="col-lg-12 stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Parking Space Details</h4>
+                    <p class="card-description"> Zone C</code>
+                    </p>
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-contextual">
+                        <thead>
+                          <tr>
+                            <th> # Id </th>
+                            <th> Parking Space Title</th>
+                            <th> Status </th>
+                            <th> Vehicle Registration No. </th>
+                            <th>  </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for space in parking_spaces_c %}
+
+                          {% if space.status != 'Vacant' %}
+                          <tr class="table-danger">
+                            <td> {{space.id}} </td>
+                            <td> {{space.parking_space_title}} </td>
+                            <td> {{space.status}} </td>
+                            <td> {{space.vehicle_parked}} </td>
+                            <td>  
+                              <form method="post" action="/dashboard/release_parking_space">
+                              {% csrf_token %}
+                              <input  name="parking_space_id" type="hidden" value="{{space.id}}"> 
+                              <button class="btn btn-primary mt-1" type="submit">Release</button>
+                            </form>
+                          </td>
+                          </tr>
+                          {% endif %}
+
+                          {% if space.status == 'Vacant' %}
+                          <tr class="table-success">
+                            <td> {{space.id}} </td>
+                            <td> {{space.parking_space_title}} </td>
+                            <td> {{space.status}} </td>
+                            <td> {{space.vehicle_parked}} </td>
+                            <td>
+                              <form method="post" action="/dashboard/book_parking_space">
+                                {% csrf_token %}
+                                <input type="text" class="form-control" placeholder="Enter Vehicle Registration Number" name="vehicle_number"> 
+                                <input  name="parking_space_id" type="hidden" value="{{space.id}}"> 
+                                <button class="btn btn-info mt-1 bookparkingbtn" type="submit">Book</button>
+                              </form>
+                            </td>
+                          </tr>
+                          {% endif %}
+                          {% endfor %}
                         </tbody>
                       </table>
                     </div>
@@ -259,7 +408,7 @@
               </div>
             </div>
   
-
+            {% endif %}
 
 
           </div>
