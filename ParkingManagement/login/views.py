@@ -68,7 +68,7 @@ class SignIn(View):
 
         if user is not None:
             auth.login(request,user)
-            return redirect('/dashboard')
+            return redirect('/dashboard/home')
         else:
             messages.error(request,'Invalid credientials')
             return redirect('/login/signin')
