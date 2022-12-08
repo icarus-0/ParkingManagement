@@ -1,0 +1,4 @@
+db.sqlite3
+dashboard/__pycache__
+login/__pycache__
+ParkingManagement/__pycache__
