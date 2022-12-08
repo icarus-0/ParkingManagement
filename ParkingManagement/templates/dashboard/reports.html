@@ -1,0 +1,96 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+   
+        <div class="main-panel">
+          <div class="content-wrapper">
+
+
+            <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Search From Date</h4>
+                    
+                    <form class="form-inline" method="get" action="/dashboard/reports">
+                      <label class="sr-only" for="inlineFormInputName2">Date</label>
+                      <input type="date" class="form-control mb-2 mr-sm-2" name="date">
+                      
+                      <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                    </form>
+                    
+                  </div>
+                </div>
+              </div>
+
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <button type="button" class="btn btn-info mb-2" id="export_to_pdf">Export</button>
+                    <h4 class="card-title">Parking Report</h4>
+                    <p class="card-description"> Date: <code>{{html_date}}</code>
+                    </p>
+                    <div class="table-responsive">
+                      <table class="table table-bordered" id="reportTable">
+                        <thead>
+                          <tr>
+                            <th> Parking Zone </th>
+                            <th> Parking Space </th>
+                            <th> Number Of Booking </th>
+                            <th> Number Of Vehicle Parked</th>
+                           
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="11"> Parking Zone A</td>
+                                <td colspan="3"> </td>
+                                
+                              </tr>
+                            {% for vp in zone_a_data%}
+                            <tr>
+                                <td> {{vp.parking_space}} </td>
+                                <td> {{vp.booking_numbers}} </td>
+                                <td>{{vp.vehicle_parked}}</td>
+                            </tr>
+                            {% endfor %}
+
+                            <tr>
+                                <td rowspan="11"> Parking Zone B</td>
+                                <td colspan="3"> </td>
+                                
+                              </tr>
+                            {% for vp in zone_b_data%}
+                            <tr>
+                                <td> {{vp.parking_space}} </td>
+                                <td> {{vp.booking_numbers}} </td>
+                                <td>{{vp.vehicle_parked}}</td>
+                            </tr>
+                            {% endfor %}
+
+                            <tr>
+                                <td rowspan="11"> Parking Zone C</td>
+                                <td colspan="3"> </td>
+                                
+                              </tr>
+                            {% for vp in zone_c_data%}
+                            <tr>
+                                <td> {{vp.parking_space}} </td>
+                                <td> {{vp.booking_numbers}} </td>
+                                <td>{{vp.vehicle_parked}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    {% endblock content %}

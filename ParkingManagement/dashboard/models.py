@@ -30,3 +30,7 @@ class VehicleParking(models.Model):
     def __str__(self):
          return str(self.id)+'_'+self.vehicle_registration_number
 
+class ReportData:
+    parking_space :str
+    booking_numbers : str
+    vehicle_parked : str

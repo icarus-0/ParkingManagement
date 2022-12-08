@@ -20,7 +20,7 @@ class HomePage(View):
                 user_data = ins[0]
                 logged_user = 'BookingCounterAgent'
             else:
-                user_data = ins[0]
+                user_data = ParkingZoneAssitant.objects.all().filter(user=user)[0]
                 logged_user = 'ParkingZoneAssitant'
             
             parking_zone_data = ParkingZone.objects.all()
@@ -105,9 +105,75 @@ class ReleaseParkingSpace(View):
 
         parking_space_ins.save()
 
-        ins = VehicleParking.objects.all().filter(parking_space = parking_space_ins).get()
+        ins = VehicleParking.objects.all().filter(parking_space = parking_space_ins).order_by('-id')[0]
         ins.status = "Released"
 
         ins.save()
 
         return redirect('/dashboard/home')
+
+
+class Reports(View):
+    def get(self,request):
+        if request.user.is_authenticated:
+            #user = User.objects.get(username=request.user)  
+            html_date = ''
+            searched_date = request.GET.get('date')
+            if searched_date != None:
+                filter_data = VehicleParking.objects.all().filter(booking_date_time__date=searched_date)
+                html_date = searched_date
+            else:
+                today = str(date.today())
+                filter_data = VehicleParking.objects.all().filter(booking_date_time__date=today)
+                html_date = today
+            
+            parking_zones = ParkingZone.objects.all()
+
+            zone_a_data = []
+            for space in ParkingSpace.objects.all().filter(parking_zone=parking_zones[0]):
+                vehicle_registations = filter_data.filter(parking_space=space)
+                ins = ReportData()
+                ins.parking_space = space.parking_space_title
+                ins.booking_numbers = len(vehicle_registations)
+                if space.status == 'Vacant':
+                    ins.vehicle_parked = '0'
+                else:
+                    ins.vehicle_parked = '1'
+                zone_a_data.append(ins)
+            
+            zone_b_data = []
+            for space in ParkingSpace.objects.all().filter(parking_zone=parking_zones[1]):
+                vehicle_registations = filter_data.filter(parking_space=space)
+                ins = ReportData()
+                ins.parking_space = space.parking_space_title
+                ins.booking_numbers = len(vehicle_registations)
+                if space.status == 'Vacant':
+                    ins.vehicle_parked = '0'
+                else:
+                    ins.vehicle_parked = '1'
+                zone_b_data.append(ins)
+
+            zone_c_data = []
+            for space in ParkingSpace.objects.all().filter(parking_zone=parking_zones[2]):
+                vehicle_registations = filter_data.filter(parking_space=space)
+                ins = ReportData()
+                ins.parking_space = space.parking_space_title
+                ins.booking_numbers = len(vehicle_registations)
+                if space.status == 'Vacant':
+                    ins.vehicle_parked = '0'
+                else:
+                    ins.vehicle_parked = '1'
+                zone_c_data.append(ins)
+
+
+
+            data = {
+                'filter_data' : filter_data,
+                'zone_a_data' : zone_a_data,
+                'zone_b_data' : zone_b_data,
+                'zone_c_data' :zone_c_data,
+                'html_date' : html_date
+            }
+
+            return render(request,'dashboard/reports.html',data)
+        return redirect('/signin')

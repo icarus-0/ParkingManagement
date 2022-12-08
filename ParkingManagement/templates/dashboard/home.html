@@ -2,69 +2,7 @@
 {% load static %}
 
 {% block content %}
-    <div class="container-scroller">
-      <!-- partial:partials/_sidebar.html -->
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-          
-        </div>
-        <ul class="nav">
-          <li class="nav-item profile">
-            <div class="profile-desc">
-              <div class="profile-pic">
-                <div class="count-indicator">
-                  
-                 
-                </div>
-                <div class="profile-name">
-                  <h5 class="mb-0 font-weight-normal">{{request.user.first_name}}</h5>
-                  <span>{{logged_user}}</span>
-                </div>
-              </div>
-              
-            </div>
-          </li>
-          <li class="nav-item nav-category">
-            <span class="nav-link">Navigation</span>
-          </li>
-          <li class="nav-item menu-items">
-            <a class="nav-link" href="/dashboard/home">
-              <span class="menu-icon">
-                <i class="mdi mdi-speedometer"></i>
-              </span>
-              <span class="menu-title">Dashboard</span>
-            </a>
-          </li>
-          
-        </ul>
-      </nav>
-      <!-- partial -->
-      <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_navbar.html -->
-        <nav class="navbar p-0 fixed-top d-flex flex-row">
-          <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
-          </div>
-          <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-            <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-              <span class="mdi mdi-menu"></span>
-            </button>
-            <ul class="navbar-nav w-100">
-              
-            </ul>
-            <ul class="navbar-nav navbar-nav-right">
-              <li class="nav-item dropdown d-none d-lg-block">
-                <a class="nav-link btn btn-danger create-new-button" href="/login/logout">Log Out</a>
-          
-              </li>
-              
-            </ul>
-            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-              <span class="mdi mdi-format-line-spacing"></span>
-            </button>
-          </div>
-        </nav>
-        <!-- partial -->
+   
         <div class="main-panel">
           <div class="content-wrapper">
 
@@ -81,72 +19,7 @@
 
 
             {% if parking_zones.count != 0 %}
-            <div class="row">
-              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-9">
-                        <div class="d-flex align-items-center align-self-start">
-                          <h3 class="mb-0">3</h3>
-                          
-                        </div>
-                      </div>
-                      
-                    </div>
-                    <h6 class="text-muted font-weight-normal">Parking Zones</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-9">
-                        <div class="d-flex align-items-center align-self-start">
-                          <h3 class="mb-0">30</h3>
-                          
-                        </div>
-                      </div>
-                      
-                    </div>
-                    <h6 class="text-muted font-weight-normal">Parking Spaces</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-9">
-                        <div class="d-flex align-items-center align-self-start">
-                          <h3 class="mb-0">0</h3>
-                          
-                        </div>
-                      </div>
-                      
-                    </div>
-                    <h6 class="text-muted font-weight-normal">Occupied Spaces</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-9">
-                        <div class="d-flex align-items-center align-self-start">
-                          <h3 class="mb-0">30</h3>
-                         
-                        </div>
-                      </div>
-                      
-                    </div>
-                    <h6 class="text-muted font-weight-normal">Free Spaces</h6>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
             
 
             <div class="row">
@@ -160,7 +33,7 @@
                           <h2 class="mb-0">Parking Zone A</h2>
                           
                         </div>
-                        <h6 class="text-muted font-weight-normal">Free Spaces - 10</h6>
+                       
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
                         <a href="#">
@@ -182,7 +55,7 @@
                           <h2 class="mb-0">Parking Zone B</h2>
                           
                         </div>
-                        <h6 class="text-muted font-weight-normal"> Free Spaces - 10</h6>
+                        
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
                         <a href="#">
@@ -203,7 +76,7 @@
                           <h2 class="mb-0">Parking Zone C</h2>
                         
                         </div>
-                        <h6 class="text-muted font-weight-normal">Free Spaces - 10</h6>
+                        
                       </div>
                       <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
                         <a href="#">
@@ -232,7 +105,7 @@
                             <th> Parking Space Title</th>
                             <th> Status </th>
                             <th> Vehicle Registration No. </th>
-                            <th>  </th>
+                            
                           </tr>
                         </thead>
                         <tbody>
@@ -244,14 +117,16 @@
                             <td> {{space.parking_space_title}} </td>
                             <td> {{space.status}} </td>
                             <td> {{space.vehicle_parked}} </td>
-                            <td>  
-                              <form method="post" action="/dashboard/release_parking_space">
-                                {% csrf_token %}
-                                <input  name="parking_space_id" type="hidden" value="{{space.id}}"> 
-                                <button class="btn btn-primary mt-1" type="submit">Release</button>
-                              </form>
-                              
-                            </td>
+                            {% if logged_user == "BookingCounterAgent" %}
+                                <td>  
+                                  <form method="post" action="/dashboard/release_parking_space">
+                                    {% csrf_token %}
+                                    <input  name="parking_space_id" type="hidden" value="{{space.id}}"> 
+                                    <button class="btn btn-primary mt-1" type="submit">Release</button>
+                                  </form>
+                                  
+                                </td>
+                            {% endif %}
                           </tr>
                           {% endif %}
 
@@ -261,15 +136,17 @@
                             <td> {{space.parking_space_title}} </td>
                             <td> {{space.status}} </td>
                             <td> {{space.vehicle_parked}} </td>
-                            <td>
-                              <form method="post" action="/dashboard/book_parking_space">
-                                {% csrf_token %}
-                                <input type="text" class="form-control" placeholder="Enter Vehicle Registration Number" name="vehicle_number"> 
-                                <input  name="parking_space_id" type="hidden" value="{{space.id}}"> 
-                                <button class="btn btn-info mt-1 bookparkingbtn" type="submit">Book</button>
-                              </form>
-                              
-                            </td>
+                            {% if logged_user == "BookingCounterAgent" %}
+                              <td>
+                                <form method="post" action="/dashboard/book_parking_space">
+                                  {% csrf_token %}
+                                  <input type="text" class="form-control" placeholder="Enter Vehicle Registration Number" name="vehicle_number"> 
+                                  <input  name="parking_space_id" type="hidden" value="{{space.id}}"> 
+                                  <button class="btn btn-info mt-1 bookparkingbtn" type="submit">Book</button>
+                                </form>
+                                
+                              </td>
+                            {% endif %}
                           </tr>
                           {% endif %}
                           {% endfor %}
@@ -297,7 +174,7 @@
                             <th> Parking Space Title</th>
                             <th> Status </th>
                             <th> Vehicle Registration No. </th>
-                            <th>  </th>
+                            
                           </tr>
                         </thead>
                         <tbody>
@@ -309,6 +186,7 @@
                             <td> {{space.parking_space_title}} </td>
                             <td> {{space.status}} </td>
                             <td> {{space.vehicle_parked}} </td>
+                            {% if logged_user == "BookingCounterAgent" %}
                             <td>
                               <form method="post" action="/dashboard/release_parking_space">
                                 {% csrf_token %}
@@ -316,7 +194,7 @@
                                 <button class="btn btn-primary mt-1" type="submit">Release</button>
                               </form>
                             </td>
-                            
+                            {% endif %}
                           </tr>
                           {% endif %}
 
@@ -326,13 +204,15 @@
                             <td> {{space.parking_space_title}} </td>
                             <td> {{space.status}} </td>
                             <td> {{space.vehicle_parked}} </td>
+                            {% if logged_user == "BookingCounterAgent" %}
                             <td>
                               <form method="post" action="/dashboard/book_parking_space">
                                 {% csrf_token %}
                                 <input type="text" class="form-control" placeholder="Enter Vehicle Registration Number" name="vehicle_number"> 
                                 <input  name="parking_space_id" type="hidden" value="{{space.id}}"> 
                                 <button class="btn btn-info mt-1 bookparkingbtn" type="submit">Book</button>
-                              </form>
+                              </form> </td>
+                              {% endif %}
                           </tr>
                           {% endif %}
                           {% endfor %}
@@ -361,7 +241,7 @@
                             <th> Parking Space Title</th>
                             <th> Status </th>
                             <th> Vehicle Registration No. </th>
-                            <th>  </th>
+                            
                           </tr>
                         </thead>
                         <tbody>
@@ -373,6 +253,7 @@
                             <td> {{space.parking_space_title}} </td>
                             <td> {{space.status}} </td>
                             <td> {{space.vehicle_parked}} </td>
+                            {% if logged_user == "BookingCounterAgent" %}
                             <td>  
                               <form method="post" action="/dashboard/release_parking_space">
                               {% csrf_token %}
@@ -380,6 +261,7 @@
                               <button class="btn btn-primary mt-1" type="submit">Release</button>
                             </form>
                           </td>
+                          {% endif %}
                           </tr>
                           {% endif %}
 
@@ -389,6 +271,7 @@
                             <td> {{space.parking_space_title}} </td>
                             <td> {{space.status}} </td>
                             <td> {{space.vehicle_parked}} </td>
+                            {% if logged_user == "BookingCounterAgent" %}
                             <td>
                               <form method="post" action="/dashboard/book_parking_space">
                                 {% csrf_token %}
@@ -397,6 +280,7 @@
                                 <button class="btn btn-info mt-1 bookparkingbtn" type="submit">Book</button>
                               </form>
                             </td>
+                            {% endif %}
                           </tr>
                           {% endif %}
                           {% endfor %}

@@ -23,9 +23,17 @@ $(document).ready(function(){
         $("#zone_b_btn_div").hide();
         $("#zone_c_btn_div").show();
     });
-});
 
 
-$(document).ready(function(){ 
+    $('#export_to_pdf').click(function(){
+        console.log('clicked');
+        $("#reportTable").tableHTMLExport({
+
+            type:'pdf',
+            orientation: 'p'
+          
+          });
+    });
     
 });
+
