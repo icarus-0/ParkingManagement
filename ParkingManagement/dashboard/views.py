@@ -24,10 +24,14 @@ class HomePage(View):
                 logged_user = 'ParkingZoneAssitant'
             
             parking_zone_data = ParkingZone.objects.all()
-            space_a = ParkingSpace.objects.all().filter(parking_zone=parking_zone_data[0])
-            space_b = ParkingSpace.objects.all().filter(parking_zone=parking_zone_data[1])
-            space_c = ParkingSpace.objects.all().filter(parking_zone=parking_zone_data[2])
+
+            if len(parking_zone_data) > 0:
+                space_a = ParkingSpace.objects.all().filter(parking_zone=parking_zone_data[0])
+                space_b = ParkingSpace.objects.all().filter(parking_zone=parking_zone_data[1])
+                space_c = ParkingSpace.objects.all().filter(parking_zone=parking_zone_data[2])
             #vehicle_registration_data = VehicleParking.objects.all()
+            else:
+                space_a,space_b,space_c = [],[],[]
 
             data = {
                 'user' : user_data,
@@ -40,7 +44,7 @@ class HomePage(View):
             }
 
             return render(request,'dashboard/home.html',data)
-        return redirect('/signin')
+        return redirect('/login/signin')
 
     def post(self,request):
         pass
